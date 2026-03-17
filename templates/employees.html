@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HRMS - Employees</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/employees">Employees</a></li>
+            <li><a href="/report">Department Report</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Employee List</h1>
+        
+        <!-- Add Employee Form -->
+        <div class="add-employee-form">
+            <h2>Add New Employee</h2>
+            <form id="employeeForm" onsubmit="addEmployee(event)">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="designation">Designation:</label>
+                    <input type="text" id="designation" name="designation" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date_of_joining">Date of Joining:</label>
+                    <input type="date" id="date_of_joining" name="date_of_joining" required>
+                </div>
+                
+                <button type="submit" class="btn">Add Employee</button>
+            </form>
+            <div id="formMessage" class="form-message"></div>
+        </div>
+        
+        <!-- Employee Table -->
+        <table class="employee-table" id="employeeTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>Date of Joining</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.designation }}</td>
+                    <td>{{ employee.department }}</td>
+                    <td>{{ employee.date_of_joining }}</td>
+                    <td>
+                        <a href="/employee/{{ employee.id }}" class="btn-small">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function addEmployee(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                designation: document.getElementById('designation').value,
+                department: document.getElementById('department').value,
+                date_of_joining: document.getElementById('date_of_joining').value
+            };
+            
+            try {
+                // Send POST request to API
+                const response = await fetch('/api/employees', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('formMessage').innerHTML = 
+                        '<div class="success">Employee added successfully!</div>';
+                    
+                    // Clear form
+                    document.getElementById('employeeForm').reset();
+                    
+                    // Add new row to table
+                    addEmployeeToTable(result.employee);
+                    
+                    // Clear success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('formMessage').innerHTML = '';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    document.getElementById('formMessage').innerHTML = 
+                        `<div class="error">Error: ${result.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('formMessage').innerHTML = 
+                    '<div class="error">Error adding employee. Please try again.</div>';
+            }
+        }
+        
+        function addEmployeeToTable(employee) {
+            const tbody = document.getElementById('employeeTableBody');
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td>${employee.id}</td>
+                <td>${employee.name}</td>
+                <td>${employee.email}</td>
+                <td>${employee.designation}</td>
+                <td>${employee.department}</td>
+                <td>${employee.date_of_joining}</td>
+                <td>
+                    <a href="/employee/${employee.id}" class="btn-small">View Details</a>
+                </td>
+            `;
+            
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+</html>

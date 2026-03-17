@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRMS - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-building"></i>
+                <h2>HRMS</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/" class="active">
+                    <i class="fas fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/employees">
+                    <i class="fas fa-users"></i>
+                    <span>Employees</span>
+                </a>
+                <a href="/report">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-calendar"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Admin User</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Welcome to HRMS System</h1>
+                <p class="subtitle">Manage employees, track attendance, and visualize department reporting with a clean dashboard.</p>
+                <div class="header-actions">
+                    <a href="/employees" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </a>
+                    <a href="/employees" class="btn-secondary">
+                        <i class="fas fa-list"></i> Browse Employees
+                    </a>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid" id="statsContainer">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Employees</h3>
+                        <div class="stat-number" id="totalEmployees">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Departments</h3>
+                        <div class="stat-number" id="totalDepartments">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Attendance Today</h3>
+                        <div class="stat-number" id="attendanceToday">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Overview -->
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Quick Overview</h2>
+                        <span class="badge">Live stats from your dashboard</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="overview-stats" id="overviewStats">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Recent Employees</h2>
+                        <a href="/employees" class="view-all">View All →</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="recent-employees" id="recentEmployees">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Employee Management</h3>
+                    <p>Add employees, view details, and filter by department/designation.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Attendance Tracking</h3>
+                    <p>Mark attendance via API and view records on each employee's page.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Reporting</h3>
+                    <p>Department-wise counts vs users for quick insights.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('/api/stats/dashboard');
+                const stats = await response.json();
+                
+                document.getElementById('totalEmployees').textContent = stats.total_employees;
+                document.getElementById('totalDepartments').textContent = stats.total_departments;
+                document.getElementById('attendanceToday').textContent = stats.attendance_today;
+                
+                // Update overview stats
+                const overviewStats = document.getElementById('overviewStats');
+                overviewStats.innerHTML = `
+                    <div class="stat-item">
+                        <span class="stat-label">Total Employees</span>
+                        <span class="stat-value">${stats.total_employees}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Departments</span>
+                        <span class="stat-value">${stats.total_departments}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Attendance Today</span>
+                        <span class="stat-value">${stats.attendance_today}</span>
+                    </div>
+                `;
+                
+                // Update recent employees
+                const recentEmployees = document.getElementById('recentEmployees');
+                if (stats.recent_employees && stats.recent_employees.length > 0) {
+                    recentEmployees.innerHTML = stats.recent_employees.map(emp => `
+                        <div class="recent-employee-item">
+                            <div class="employee-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="employee-info">
+                                <h4>${emp.name}</h4>
+                                <p>${emp.designation} • ${emp.department}</p>
+                            </div>
+                            <a href="/employee/${emp.id}" class="view-link">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    `).join('');
+                } else {
+                    recentEmployees.innerHTML = '<p class="no-data">No employees found</p>';
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        // Load stats on page load
+        document.addEventListener('DOMContentLoaded', loadDashboardStats);
+    </script>
+</body>
+</html>
