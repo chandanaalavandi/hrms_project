@@ -1,105 +1,101 @@
-Basic HRMS (Human Resource Management System)
-A comprehensive HRMS application built with Flask that demonstrates employee management, attendance tracking, departmental reporting, and interactive dashboards with modern UI.
+# 🚀 Basic HRMS (Human Resource Management System)
 
-📋 Features
-👥 Employee Management
--- Add new employees with complete details (name, email, address, designation, department, date of joining)
+A **comprehensive HRMS web application** built using **Flask** that manages employee data, attendance tracking, and departmental reporting with a modern UI dashboard.
 
--- View all employees in a sortable table
+---
 
--- Filter employees by department, designation, or search term
+## 📌 Features
 
--- Delete employees with confirmation
+### 👥 Employee Management
 
--- View detailed employee profiles
+* Add employees with complete details
+* View employees in a sortable table
+* Filter by department, designation, or search
+* Delete employees with confirmation
+* View detailed employee profiles
 
-⏱️ Attendance Tracking
--- Mark attendance with in-time and out-time
+---
 
--- Automatic working hours calculation
+### ⏱️ Attendance Tracking
 
--- View attendance history for each employee
+* Mark attendance (In-Time / Out-Time)
+* Automatic working hours calculation
+* View attendance history
+* Dashboard with today's stats
+* Status badges (Present, Pending, Completed)
 
--- Today's attendance statistics on dashboard
+---
 
--- Status badges (Present, Pending, Completed)
+### 📊 Reports & Analytics
 
-📊 Reports & Analytics
--- Department-wise employee count with bar charts
+* Department-wise employee count (Bar Chart)
+* Distribution visualization (Doughnut Chart)
+* Export reports (CSV & JSON)
+* Percentage breakdown tables
+* Live dashboard statistics
 
--- Distribution visualization with doughnut charts
+---
 
--- Export reports as CSV
+### 🎨 Modern UI
 
--- Export reports as JSON
+* Responsive sidebar navigation
+* Gradient UI & modern color scheme
+* Interactive charts (Chart.js)
+* Font Awesome icons
+* Mobile-friendly design
+* Animations & loading states
 
--- Percentage breakdown in table view
+---
 
--- Live dashboard statistics
+## 🛠️ Tech Stack
 
-🎨 Modern UI Features
--- Responsive sidebar navigation
+| Layer    | Technology              |
+| -------- | ----------------------- |
+| Backend  | Flask (Python)          |
+| Database | SQLite + SQLAlchemy ORM |
+| Frontend | HTML, CSS, JavaScript   |
+| Charts   | Chart.js                |
+| Icons    | Font Awesome            |
 
--- Gradient backgrounds and modern color scheme
+---
 
--- Interactive charts using Chart.js
+## 📁 Project Structure
 
--- Font Awesome icons throughout
-
--- Mobile-responsive design
-
--- Loading states and animations
-
--- Card-based layout with hover effects
-
-🛠️ Tech Stack
--- Backend: Flask 2.3.3 (Python)
-
--- Database: SQLite with SQLAlchemy ORM 3.1.1
-
--- Frontend: HTML5, CSS3, JavaScript (ES6)
-
--- Charts: Chart.js 3.9.1
-
--- Icons: Font Awesome 6.0.0
-
--- Fonts: Google Fonts (Inter)
-
-📁 Project Structure
-text
+```bash
 hrms_project/
-├── app.py                 # Main application with all routes and API endpoints
-├── models.py              # Database models (Employee, Attendance)
-├── extensions.py          # SQLAlchemy initialization
-├── requirements.txt       # Project dependencies
-├── README.md              # Project documentation
-├── hrms.db                # SQLite database (auto-generated)
+│
+├── app.py
+├── models.py
+├── extensions.py
+├── requirements.txt
+├── README.md
+├── hrms.db
+│
 ├── static/
-│   └── style.css          # Comprehensive CSS styling (600+ lines)
+│   └── style.css
+│
 └── templates/
-    ├── index.html         # Dashboard with live statistics
-    ├── employees.html     # Employee list with add form and filters
-    ├── employee_detail.html # Employee profile with attendance history
-    ├── mark_attendance.html # Dedicated attendance marking form
-    └── report.html        # Department reports with charts and export
+    ├── index.html
+    ├── employees.html
+    ├── employee_detail.html
+    ├── mark_attendance.html
+    └── report.html
+```
 
+---
 
-🚀 Installation and Setup
--- Prerequisites
-Python 3.8 or higher
+## ⚙️ Installation & Setup
 
-pip (Python package manager)
+### 1️⃣ Clone the repository
 
-Virtual environment (recommended)
-
--- Step-by-Step Installation
-Clone or extract the project
-
--- bash
+```bash
+git clone https://github.com/your-username/hrms_project.git
 cd hrms_project
-Create a virtual environment
+```
 
--- bash
+### 2️⃣ Create virtual environment
+
+```bash
 # Windows
 python -m venv venv
 venv\Scripts\activate
@@ -107,115 +103,165 @@ venv\Scripts\activate
 # macOS/Linux
 python3 -m venv venv
 source venv/bin/activate
-Install dependencies
+```
 
--- bash
+### 3️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
-Run the application
+```
 
--- bash
+### 4️⃣ Run the application
+
+```bash
 python app.py
-Access the application
-Open your browser and navigate to: http://localhost:5000
+```
 
-📡 API Endpoints
--Employee Management
--Method	Endpoint	Description	Request Body
--POST	/api/employees	Add new employee	{name, email, address, designation, department, date_of_joining}
--GET	/api/employees	Get all employees	-
--GET	/api/employees/filter	Filter employees	Query params: department, designation, search
--DELETE	/api/employees/<id>	Delete employee	-
--Attendance Management
--Method	Endpoint	Description	Request Body
--POST	/api/attendance	Mark attendance	{employee_id, date, in_time, out_time}
--GET	/api/attendance/<id>	Get employee attendance	-
--GET	/api/attendance/today	Get today's attendance stats	-
--- Reports & Dashboard
-Method	Endpoint	Description
--GET	/api/report/department/	Get department-wise employee counts
--GET	/api/report/export/csv	Download report as CSV
--GET	/api/stats/dashboard	Get dashboard statistics
-🎯 Web Routes
-Route	Description
-/	Home dashboard with live statistics
-/employees	Employee list with add form
-/employee/<id>	Employee details with attendance history
-/mark-attendance/<id>	Dedicated attendance marking form
-/report	Department reports with charts
-💻 Usage Examples
-Adding an Employee via API
-bash
+### 🌐 Access the app
+
+```
+http://localhost:5000
+```
+
+---
+
+## 📡 API Endpoints
+
+### 👤 Employee APIs
+
+| Method | Endpoint              | Description       |
+| ------ | --------------------- | ----------------- |
+| POST   | /api/employees        | Add employee      |
+| GET    | /api/employees        | Get all employees |
+| GET    | /api/employees/filter | Filter employees  |
+| DELETE | /api/employees/<id>   | Delete employee   |
+
+---
+
+### ⏱️ Attendance APIs
+
+| Method | Endpoint              | Description         |
+| ------ | --------------------- | ------------------- |
+| POST   | /api/attendance       | Mark attendance     |
+| GET    | /api/attendance/<id>  | Employee attendance |
+| GET    | /api/attendance/today | Today's stats       |
+
+---
+
+### 📊 Reports APIs
+
+| Method | Endpoint               | Description       |
+| ------ | ---------------------- | ----------------- |
+| GET    | /api/report/department | Department report |
+| GET    | /api/report/export/csv | Export CSV        |
+| GET    | /api/stats/dashboard   | Dashboard stats   |
+
+---
+
+## 🌐 Web Routes
+
+| Route            | Description         |
+| ---------------- | ------------------- |
+| /                | Dashboard           |
+| /employees       | Employee management |
+| /employee/<id>   | Employee details    |
+| /mark-attendance | Attendance form     |
+| /report          | Reports & analytics |
+
+---
+
+## 💻 Usage Examples
+
+### ➕ Add Employee
+
+```bash
 curl -X POST http://localhost:5000/api/employees \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "John Doe",
-    "email": "john@example.com",
-    "address": "123 Main St",
-    "designation": "Software Engineer",
-    "department": "Engineering",
-    "date_of_joining": "2024-01-15"
-  }'
-Marking Attendance via API
--- bash
+-H "Content-Type: application/json" \
+-d '{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "address": "123 Main St",
+  "designation": "Software Engineer",
+  "department": "Engineering",
+  "date_of_joining": "2024-01-15"
+}'
+```
+
+---
+
+### ⏱️ Mark Attendance
+
+```bash
 curl -X POST http://localhost:5000/api/attendance \
-  -H "Content-Type: application/json" \
-  -d '{
-    "employee_id": 1,
-    "date": "2024-01-15",
-    "in_time": "09:00:00",
-    "out_time": "18:00:00"
-  }'
-  
-📊 Time & Space Complexities
-Operation	Time Complexity	Space Complexity
-Add Employee	O(1)	O(1)
-Get All Employees	O(n)	O(n)
-Filter Employees	O(n)	O(n)
-Mark Attendance	O(1)	O(1)
-Get Employee Attendance	O(m)	O(m)
-Department Report	O(n)	O(d)
-where n = number of employees, m = number of attendance records, d = number of departments
+-H "Content-Type: application/json" \
+-d '{
+  "employee_id": 1,
+  "date": "2024-01-15",
+  "in_time": "09:00:00",
+  "out_time": "18:00:00"
+}'
+```
 
-🔧 Troubleshooting
-Common Issues and Solutions
-Database errors
+---
 
-bash
-# Delete the existing database and restart
+## 📊 Time & Space Complexity
+
+| Operation         | Time | Space |
+| ----------------- | ---- | ----- |
+| Add Employee      | O(1) | O(1)  |
+| Get Employees     | O(n) | O(n)  |
+| Filter Employees  | O(n) | O(n)  |
+| Mark Attendance   | O(1) | O(1)  |
+| Attendance Fetch  | O(m) | O(m)  |
+| Department Report | O(n) | O(d)  |
+
+---
+
+## 🔧 Troubleshooting
+
+### ❌ Database Issues
+
+```bash
 rm hrms.db
 python app.py
-Port already in use
+```
 
-bash
-# Change the port in app.py
+### ❌ Port Already in Use
+
+```python
 app.run(debug=True, port=5001)
-Module not found errors
+```
 
-bash
-# Ensure all dependencies are installed
+### ❌ Module Not Found
+
+```bash
 pip install -r requirements.txt
-📝 Notes
-The application runs in debug mode by default (not for production)
+```
 
-Database is automatically created on first run
+---
 
-All API endpoints return JSON responses
+## 📝 Notes
 
-The UI is fully responsive and works on mobile devices
+* Runs in debug mode (development only)
+* Database auto-creates on first run
+* Fully responsive UI
+* REST APIs return JSON
+* Charts update dynamically
 
-Charts automatically update when data changes
+---
 
-🤝 Contributing
-This project was created for an internship assignment. For any questions or suggestions, please contact the author.
+## 🤝 Contribution
 
-📄 License
-This project is for educational purposes as part of an internship assignment.
+This project was built as part of an internship assignment.
 
-🎉 Acknowledgments
-Flask documentation
+---
 
-SQLAlchemy ORM documentation
+## 👩‍💻 Author
 
-Chart.js library
+**Chandana Kotresh Alavandi**
 
-Font Awesome icons
+---
+
+## ⭐ Final Note
+
+This project is designed with **real-world HR workflows**, scalable backend structure, and RESTful API design — making it suitable for production-level extensions.
