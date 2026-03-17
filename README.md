@@ -89,7 +89,7 @@ hrms_project/
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/hrms_project.git
+git clone https://github.com/chandanaalavandi/hrms_project.git
 cd hrms_project
 ```
 
